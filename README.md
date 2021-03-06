@@ -1,2 +1,0 @@
-# Gapstar
-Gapstar assignment

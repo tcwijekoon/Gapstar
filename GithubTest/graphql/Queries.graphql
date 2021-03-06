@@ -1,0 +1,21 @@
+query userInfo{
+  viewer {
+    login
+    name
+    email
+    followers{
+      totalCount
+    }
+    following{
+      totalCount
+    }
+  }
+}
+
+query followers{
+  viewer {
+    followers{
+      totalCount
+    }
+  }
+}
