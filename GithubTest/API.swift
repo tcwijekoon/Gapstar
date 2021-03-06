@@ -14,6 +14,7 @@ public final class UserInfoQuery: GraphQLQuery {
         login
         name
         email
+        avatarUrl
         followers {
           __typename
           totalCount
@@ -69,6 +70,7 @@ public final class UserInfoQuery: GraphQLQuery {
           GraphQLField("login", type: .nonNull(.scalar(String.self))),
           GraphQLField("name", type: .scalar(String.self)),
           GraphQLField("email", type: .nonNull(.scalar(String.self))),
+          GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
           GraphQLField("followers", type: .nonNull(.object(Follower.selections))),
           GraphQLField("following", type: .nonNull(.object(Following.selections))),
         ]
@@ -80,8 +82,8 @@ public final class UserInfoQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(login: String, name: String? = nil, email: String, followers: Follower, following: Following) {
-        self.init(unsafeResultMap: ["__typename": "User", "login": login, "name": name, "email": email, "followers": followers.resultMap, "following": following.resultMap])
+      public init(login: String, name: String? = nil, email: String, avatarUrl: String, followers: Follower, following: Following) {
+        self.init(unsafeResultMap: ["__typename": "User", "login": login, "name": name, "email": email, "avatarUrl": avatarUrl, "followers": followers.resultMap, "following": following.resultMap])
       }
 
       public var __typename: String {
@@ -120,6 +122,16 @@ public final class UserInfoQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "email")
+        }
+      }
+
+      /// A URL pointing to the user's public avatar.
+      public var avatarUrl: String {
+        get {
+          return resultMap["avatarUrl"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "avatarUrl")
         }
       }
 

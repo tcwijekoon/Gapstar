@@ -19,6 +19,16 @@ class ViewController: UIViewController {
       return view
     }()
     
+    let profileImage: UIImageView = {
+        let image = UIImageView()
+        image.layer.borderWidth = 1
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.black.cgColor
+        image.layer.cornerRadius = image.frame.height/2
+        image.clipsToBounds = true
+        return image
+    }()
+    
     let titleLbl: UILabel = {
         let view = UILabel()
         view.textColor = .black
@@ -35,6 +45,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         contView.addSubview(titleLbl)
+        contView.addSubview(profileImage)
+        
         view.addSubview(contView)
         
         contView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
@@ -46,15 +58,24 @@ class ViewController: UIViewController {
             titleLbl.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding),
             titleLbl.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding),
             titleLbl.topAnchor.constraint(equalTo: contView.topAnchor, constant: 20),
-           
+            
+//            profileImage.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding),
+//            profileImage.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20),
         ])
         
+//        profileImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        profileImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
         presenter.attachView(view: self)
         
     }
 }
 
+
 extension ViewController : ProfileView{
+    func profileLoadSuccess(fullname: String, name: String, email: String, followers: Int, followings: Int, avatarUrl: String) {
+        
+    }
+    
     func showToast(message: String, duration: Double) {
         
     }
@@ -67,9 +88,6 @@ extension ViewController : ProfileView{
         
     }
     
-    func profileLoadSuccess(fullname: String, name: String, email: String, followers: Int, followings: Int) {
-        
-    }
     
     func profileLoadFailed() {
         
