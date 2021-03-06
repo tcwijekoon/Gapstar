@@ -26,7 +26,7 @@ class ProfilePresenter {
         profileView = nil
     }
     
-    func getPeople() {
+    func getProfile() {
         profileView?.startLoading()
         ApolloNetwork.apollo.fetch(query: UserInfoQuery(), cachePolicy: .fetchIgnoringCacheData) { result in
             switch result {
@@ -34,7 +34,7 @@ class ProfilePresenter {
                 self.profileView?.finishLoading()
                 let viewer = result.data?.viewer
 //                self.profileView?.showToast(message: viewer!.name!, duration: 20.0)
-                self.profileView?.profileLoadSuccess(fullname: viewer!.name!, name: viewer!.login, email: viewer!.email, followers: viewer!.followers.totalCount, followings: viewer!.following.totalCount,avatarUrl :viewer!.avatarUrl )
+                self.profileView?.profileLoadSuccess(fullname: viewer!.name!, name: viewer!.login, email: viewer!.email, followers: viewer!.followers.totalCount, followings: viewer!.following.totalCount,avatarUrl :"viewer!.avatarUrl" )
             case .failure(let error):
                 print("Error: \(error)")
                 self.profileView?.finishLoading()

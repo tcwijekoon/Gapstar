@@ -40,13 +40,23 @@ class ViewController: UIViewController {
         return view
     }()
     
+    let lblName: UILabel = {
+        let view = UILabel()
+        view.textColor = .black
+        view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.textAlignment = .left
+        view.numberOfLines = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         contView.addSubview(titleLbl)
+        contView.addSubview(lblName)
         contView.addSubview(profileImage)
-        
         view.addSubview(contView)
         
         contView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
@@ -58,14 +68,20 @@ class ViewController: UIViewController {
             titleLbl.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding),
             titleLbl.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding),
             titleLbl.topAnchor.constraint(equalTo: contView.topAnchor, constant: 20),
-            
-//            profileImage.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding),
-//            profileImage.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20),
         ])
         
+        NSLayoutConstraint.activate([
+            lblName.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding),
+            lblName.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding),
+            lblName.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20),
+        ])
+        
+//        profileImage.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
+//        profileImage.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20).isActive = true
 //        profileImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
 //        profileImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
         presenter.attachView(view: self)
+        presenter.getProfile()
         
     }
 }
@@ -73,7 +89,7 @@ class ViewController: UIViewController {
 
 extension ViewController : ProfileView{
     func profileLoadSuccess(fullname: String, name: String, email: String, followers: Int, followings: Int, avatarUrl: String) {
-        
+        titleLbl.text = fullname
     }
     
     func showToast(message: String, duration: Double) {
