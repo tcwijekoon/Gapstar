@@ -10,7 +10,7 @@ import Apollo
 
 class ApolloNetwork {
     
-    static private let token = "7a15eaf1f568b2672132078c7f44c7892665a294"
+    static private let token = "ce4b17ef80f5751bed44620c0c5ac0d6d6f183d2"
     
     static var apollo: ApolloClient = {
         let network = RequestChainNetworkTransport(

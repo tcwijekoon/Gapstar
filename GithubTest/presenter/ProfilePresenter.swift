@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileView: NSObjectProtocol {
-    func showToast(message: String, duration: Double)
+    func showToast(message: String)
     func startLoading()
     func finishLoading()
     func profileLoadSuccess(fullname : String, name : String, email : String, followers :Int, followings :Int, avatarUrl : String)
