@@ -10,5 +10,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "ViewController.profileLoadSuccess(fullname:name:email:followers:followings:avatarUrl:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "URL(string: &quot;https://avatars.githubusercontent.com/u/3163801?v=4&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

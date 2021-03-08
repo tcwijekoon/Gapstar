@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         image.layer.borderColor = UIColor.black.cgColor
         image.layer.cornerRadius = image.frame.height/2
         image.clipsToBounds = true
+        image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
@@ -96,23 +97,47 @@ class ViewController: UIViewController {
         return view
     }()
     
+    let tableView: UITableView = {
+        let tbl = UITableView()
+        tbl.translatesAutoresizingMaskIntoConstraints = false
+        return tbl
+    }()
+    
+//    var tableView :UITableView!
+    private let myArray: NSArray = ["First","Second","Third"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+//        tableView = UITableView()
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .lightGray
         
         contView.addSubview(titleLbl)
+        contView.addSubview(profileImage)
         contView.addSubview(lblFullName)
         contView.addSubview(lblName)
         contView.addSubview(lblEmail)
         contView.addSubview(lblFollowers)
         contView.addSubview(lblEmail)
         contView.addSubview(lblFollowings)
+        contView.addSubview(tableView)
         view.addSubview(contView)
+        tableView.reloadData()
+        
+        profileImage.image = UIImage(named: "avatar")
+        profileImage.frame.origin = CGPoint(x: 100, y: 100)
         
 //        titleLbl.backgroundColor = .green
         
         contView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         contView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+        contView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         contView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
         
         let padding: CGFloat = 10
@@ -120,11 +145,16 @@ class ViewController: UIViewController {
         titleLbl.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         titleLbl.topAnchor.constraint(equalTo: contView.topAnchor, constant: 20).isActive = true
     
-        lblFullName.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
+        profileImage.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
+        profileImage.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        lblFullName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: padding).isActive = true
         lblFullName.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         lblFullName.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 10).isActive = true
         
-        lblName.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
+        lblName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: padding).isActive = true
         lblName.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         lblName.topAnchor.constraint(equalTo: lblFullName.bottomAnchor, constant: 10).isActive = true
         
@@ -137,14 +167,18 @@ class ViewController: UIViewController {
         
         lblFollowings.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         lblFollowings.topAnchor.constraint(equalTo: lblEmail.bottomAnchor, constant: 10).isActive = true
-//        profileImage.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
-//        profileImage.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20).isActive = true
-//        profileImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        profileImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 15).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: contView.leadingAnchor, constant: -padding).isActive = true
+        
         presenter.attachView(view: self)
         presenter.getProfile()
         
     }
+    
 }
 
 
@@ -155,6 +189,9 @@ extension ViewController : ProfileView{
         lblEmail.text = email
         lblFollowers.text = "\(followers)  Followers"
         lblFollowings.text = "\(followings) Followings"
+        
+        let fileUrl = URL(string: avatarUrl)
+        profileImage.load(url:fileUrl! )
     }
     
     func showToast(message: String) {
@@ -165,7 +202,7 @@ extension ViewController : ProfileView{
         
         self.present(alert, animated: false)
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 20) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
             alert.dismiss(animated: true)
         }
     }
@@ -182,6 +219,21 @@ extension ViewController : ProfileView{
     func profileLoadFailed() {
         showToast(message: "Profile loading failed. Please check github token, It may be not valid.")
     }
-    
-    
+}
+
+extension ViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+           print("Num: \(indexPath.row)")
+           print("Value: \(myArray[indexPath.row])")
+       }
+
+       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+           return myArray.count
+       }
+
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
+           cell.textLabel!.text = "\(myArray[indexPath.row])"
+           return cell
+       }
 }
