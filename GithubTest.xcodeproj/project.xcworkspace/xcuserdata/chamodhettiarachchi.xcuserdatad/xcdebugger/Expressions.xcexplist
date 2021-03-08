@@ -8,6 +8,12 @@
             <PersistentString
                value = "UserInfoQuery()">
             </PersistentString>
+            <PersistentString
+               value = "lblFollowings.frame.origin.y">
+            </PersistentString>
+            <PersistentString
+               value = "lblFollowings.frame.origin.x">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState

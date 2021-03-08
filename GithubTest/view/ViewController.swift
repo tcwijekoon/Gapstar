@@ -22,9 +22,9 @@ class ViewController: UIViewController {
     
     let profileImage: UIImageView = {
         let image = UIImageView()
-        image.layer.borderWidth = 1
+//        image.layer.borderWidth = 1
         image.layer.masksToBounds = false
-        image.layer.borderColor = UIColor.black.cgColor
+//        image.layer.borderColor = UIColor.black.cgColor
         image.layer.cornerRadius = image.frame.height/2
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -97,26 +97,16 @@ class ViewController: UIViewController {
         return view
     }()
     
-    let tableView: UITableView = {
-        let tbl = UITableView()
-        tbl.translatesAutoresizingMaskIntoConstraints = false
-        return tbl
-    }()
+//    let tableView: UITableView = {
+//        let tbl = UITableView()
+//        tbl.translatesAutoresizingMaskIntoConstraints = false
+//        return tbl
+//    }()
     
-//    var tableView :UITableView!
     private let myArray: NSArray = ["First","Second","Third"]
-    
+    private var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        tableView = UITableView()
-        self.tableView.estimatedRowHeight = 80
-        self.tableView.rowHeight = UITableView.automaticDimension
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .lightGray
         
         contView.addSubview(titleLbl)
         contView.addSubview(profileImage)
@@ -126,14 +116,10 @@ class ViewController: UIViewController {
         contView.addSubview(lblFollowers)
         contView.addSubview(lblEmail)
         contView.addSubview(lblFollowings)
-        contView.addSubview(tableView)
         view.addSubview(contView)
-        tableView.reloadData()
         
         profileImage.image = UIImage(named: "avatar")
         profileImage.frame.origin = CGPoint(x: 100, y: 100)
-        
-//        titleLbl.backgroundColor = .green
         
         contView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         contView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
@@ -144,36 +130,45 @@ class ViewController: UIViewController {
         titleLbl.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
         titleLbl.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         titleLbl.topAnchor.constraint(equalTo: contView.topAnchor, constant: 20).isActive = true
-    
+
         profileImage.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
         profileImage.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        
+        profileImage.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 70).isActive = true
+
         lblFullName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: padding).isActive = true
         lblFullName.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         lblFullName.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 10).isActive = true
-        
+
         lblName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: padding).isActive = true
         lblName.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         lblName.topAnchor.constraint(equalTo: lblFullName.bottomAnchor, constant: 10).isActive = true
-        
+
         lblEmail.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
         lblEmail.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
-        lblEmail.topAnchor.constraint(equalTo: lblName.bottomAnchor, constant: 10).isActive = true
-        
+        lblEmail.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10).isActive = true
+
         lblFollowers.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
         lblFollowers.topAnchor.constraint(equalTo: lblEmail.bottomAnchor, constant: 10).isActive = true
-        
+
         lblFollowings.trailingAnchor.constraint(equalTo: contView.trailingAnchor, constant: -padding).isActive = true
         lblFollowings.topAnchor.constraint(equalTo: lblEmail.bottomAnchor, constant: 10).isActive = true
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 15).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: contView.leadingAnchor, constant: padding).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: contView.leadingAnchor, constant: -padding).isActive = true
         
+        let displayWidth: CGFloat = self.view.frame.width
+        let displayHeight: CGFloat = self.view.frame.height
+         tableView = UITableView(frame: CGRect(x: lblFollowings.frame.origin.x, y: 200, width: displayWidth, height: displayHeight - 200))
+                
+         tableView.register(TableCell.self, forCellReuseIdentifier: "cell")
+         tableView.dataSource = self
+         tableView.delegate = self
+         tableView.backgroundColor = .lightGray
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
+        
+        contView.addSubview(tableView)
+         
         presenter.attachView(view: self)
         presenter.getProfile()
         
@@ -232,8 +227,12 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
        }
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
-           cell.textLabel!.text = "\(myArray[indexPath.row])"
+           let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! TableCell
+           cell.lblusername.text = "\(myArray[indexPath.row])"
            return cell
        }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
 }
