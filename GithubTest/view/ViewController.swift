@@ -105,6 +105,8 @@ class ViewController: UIViewController {
     
     var arrPinnedRepos = [PinnedRepo]()
     private var tableView: UITableView!
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -164,6 +166,10 @@ class ViewController: UIViewController {
          tableView.delegate = self
          tableView.backgroundColor = .lightGray
         
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        
         contView.addSubview(tableView)
          
         presenter.attachView(view: self)
@@ -172,8 +178,10 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func refresh(_ sender: Any) {
+        presenter.getPinnedRepos()
+    }
 }
-
 
 extension ViewController : ProfileView{
     func pinnedReposLoadSuccess(pinnedRepos: [PinnedRepo]) {
