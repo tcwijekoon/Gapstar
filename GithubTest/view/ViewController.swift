@@ -103,7 +103,7 @@ class ViewController: UIViewController {
 //        return tbl
 //    }()
     
-    private let myArray: NSArray = ["First","Second","Third"]
+    var arrPinnedRepos = [PinnedRepo]()
     private var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,13 +164,11 @@ class ViewController: UIViewController {
          tableView.delegate = self
          tableView.backgroundColor = .lightGray
         
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 150
-        
         contView.addSubview(tableView)
          
         presenter.attachView(view: self)
         presenter.getProfile()
+        presenter.getPinnedRepos()
         
     }
     
@@ -178,14 +176,18 @@ class ViewController: UIViewController {
 
 
 extension ViewController : ProfileView{
-    func profileLoadSuccess(fullname: String, name: String, email: String, followers: Int, followings: Int, avatarUrl: String) {
-        lblFullName.text = fullname
-        lblName.text = name
-        lblEmail.text = email
-        lblFollowers.text = "\(followers)  Followers"
-        lblFollowings.text = "\(followings) Followings"
-        
-        let fileUrl = URL(string: avatarUrl)
+    func pinnedReposLoadSuccess(pinnedRepos: [PinnedRepo]) {
+        arrPinnedRepos = pinnedRepos
+        tableView.reloadData()
+    }
+    
+    func profileLoadSuccess(userInfo : UserInfo) {
+        lblFullName.text = userInfo.name
+        lblName.text = userInfo.loginName
+        lblEmail.text = userInfo.email
+        lblFollowers.text = "\(userInfo.noFollowers!)  Followers"
+        lblFollowings.text = "\(userInfo.noFollowings!) Followings"
+        let fileUrl = URL(string: userInfo.avatar!)
         profileImage.load(url:fileUrl! )
     }
     
@@ -219,20 +221,24 @@ extension ViewController : ProfileView{
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
            print("Num: \(indexPath.row)")
-           print("Value: \(myArray[indexPath.row])")
+           print("Value: \(arrPinnedRepos[indexPath.row])")
        }
 
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return myArray.count
+           return arrPinnedRepos.count
        }
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! TableCell
-           cell.lblusername.text = "\(myArray[indexPath.row])"
+        cell.lblusername.text = "\(arrPinnedRepos[indexPath.row].name!)"
+        cell.lblTitle.text = "\(arrPinnedRepos[indexPath.row].nameWithOwner!)"
+        cell.lblDesc.text = "\(arrPinnedRepos[indexPath.row].repoDescription!)"
+        cell.lblProLang.text = "\(arrPinnedRepos[indexPath.row].primaryLanguage!)"
+//        cell.lblusername.text = "\(arrPinnedRepos[indexPath.row].name!)"
            return cell
        }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 170
     }
 }

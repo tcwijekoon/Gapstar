@@ -64,9 +64,9 @@ class TableCell: UITableViewCell {
         return view
     }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         contentView.addSubview(profileImage)
         contentView.addSubview(lblusername)
         contentView.addSubview(lblTitle)
@@ -79,13 +79,13 @@ class TableCell: UITableViewCell {
         profileImage.frame.origin = CGPoint(x: 100, y: 100)
 
         profileImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding).isActive = true
-        profileImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
+        profileImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         lblusername.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: padding).isActive = true
         lblusername.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding).isActive = true
-        lblusername.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 20).isActive = true
+        lblusername.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 10).isActive = true
 
         lblTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding).isActive = true
         lblTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding).isActive = true
@@ -98,6 +98,10 @@ class TableCell: UITableViewCell {
         lblProLang.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding).isActive = true
         lblProLang.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding).isActive = true
         lblProLang.topAnchor.constraint(equalTo: lblDesc.bottomAnchor, constant: 10).isActive = true
-
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }

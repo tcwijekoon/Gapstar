@@ -13,10 +13,23 @@ query userInfo{
   }
 }
 
-query followers{
-  viewer {
-    followers{
+query pinnedRepos{
+    user(login:"kranthilakum") {
+    pinnedItems(first: 5, types: [REPOSITORY, GIST]) {
       totalCount
+      edges {
+        node {
+          ... on Repository {
+            nameWithOwner
+            name
+            description
+            stargazerCount
+            primaryLanguage {
+              name
+            }
+          }
+        }
+      }
     }
   }
 }
