@@ -31,6 +31,10 @@ class GithubTestTests: XCTestCase {
         sut?.getProfile()
     }
     
+    func testToastMessage() throws {
+        sut?.getPinnedRepos()
+    }
+    
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -44,7 +48,7 @@ class GithubTestTests: XCTestCase {
     }
 }
 
-class MockView: ProfileView {
+class MockView: NSObject, ProfileView {
     func showToast(message: String) {
         print("showToast")
     }
@@ -57,8 +61,12 @@ class MockView: ProfileView {
         print("test loading finished")
     }
     
-    func profileLoadSuccess(fullname: String, name: String, email: String, followers: Int, followings: Int, avatarUrl: String) {
+    func profileLoadSuccess(userInfo : UserInfo){
         print("test profileLoadSuccess")
+    }
+    
+    func pinnedReposLoadSuccess(pinnedRepos : [PinnedRepo]){
+        print("test pinnedReposLoadSuccess")
     }
     
     func profileLoadFailed() {
