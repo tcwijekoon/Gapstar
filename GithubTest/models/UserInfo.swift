@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class UserInfo : NSObject{
+struct UserInfo: Codable {
     var name : String? = ""
     var loginName : String? = ""
     var email : String? = ""

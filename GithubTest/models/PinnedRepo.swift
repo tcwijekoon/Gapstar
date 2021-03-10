@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class PinnedRepo : NSObject{
+struct PinnedRepo: Codable {
     var name : String? = ""
     var nameWithOwner : String? = ""
     var primaryLanguage : String? = ""

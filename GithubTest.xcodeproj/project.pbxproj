@@ -23,6 +23,7 @@
 		D9162E0425F3C35A00B2F6A9 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9162E0325F3C35A00B2F6A9 /* API.swift */; };
 		D9162E0925F3C43F00B2F6A9 /* ApolloNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9162E0825F3C43F00B2F6A9 /* ApolloNetwork.swift */; };
 		D9162E2225F3EA1A00B2F6A9 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9162E2125F3EA1A00B2F6A9 /* ProfilePresenter.swift */; };
+		D9F36EE925F89F9C00F6CCDE /* SavedPinnedRepos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F36EE825F89F9C00F6CCDE /* SavedPinnedRepos.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		D9162E0325F3C35A00B2F6A9 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = GithubTest/API.swift; sourceTree = SOURCE_ROOT; };
 		D9162E0825F3C43F00B2F6A9 /* ApolloNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloNetwork.swift; sourceTree = "<group>"; };
 		D9162E2125F3EA1A00B2F6A9 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		D9F36EE825F89F9C00F6CCDE /* SavedPinnedRepos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPinnedRepos.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			children = (
 				D915139A25F75B4700509523 /* PinnedRepo.swift */,
 				D91513A225F75CA500509523 /* UserInfo.swift */,
+				D9F36EE825F89F9C00F6CCDE /* SavedPinnedRepos.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				D915138F25F65BD200509523 /* UiExtensions.swift in Sources */,
 				D9162E0425F3C35A00B2F6A9 /* API.swift in Sources */,
 				D91513A325F75CA500509523 /* UserInfo.swift in Sources */,
+				D9F36EE925F89F9C00F6CCDE /* SavedPinnedRepos.swift in Sources */,
 				D91512F925F4181800509523 /* CustomActivityIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

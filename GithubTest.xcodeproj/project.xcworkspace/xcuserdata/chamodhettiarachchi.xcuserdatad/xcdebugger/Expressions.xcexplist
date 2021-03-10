@@ -3,6 +3,22 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "ProfilePresenter.getSyncDateTime():ProfilePresenter.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "value as! String">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ProfilePresenter.getPinnedRepos(getSavedData:):ProfilePresenter.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Calendar.current.isDate(Date(), equalTo: getSyncDateTime(), toGranularity: .day)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ViewController.viewDidLoad():ViewController.swift">
          <PersistentStrings>
             <PersistentString

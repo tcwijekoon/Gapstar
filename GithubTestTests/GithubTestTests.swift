@@ -32,7 +32,7 @@ class GithubTestTests: XCTestCase {
     }
     
     func testToastMessage() throws {
-        sut?.getPinnedRepos()
+        sut?.getPinnedRepos(getSavedData: false)
     }
     
     func testExample() throws {

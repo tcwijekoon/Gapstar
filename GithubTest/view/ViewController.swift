@@ -174,20 +174,29 @@ class ViewController: UIViewController {
          
         presenter.attachView(view: self)
         presenter.getProfile()
-        presenter.getPinnedRepos()
+        presenter.getPinnedRepos(getSavedData: true)
         
     }
     
     @IBAction func refresh(_ sender: Any) {
-        presenter.getPinnedRepos()
+        presenter.getPinnedRepos(getSavedData: false)
     }
     
+    private func stopRefrshIndic(){
+        DispatchQueue.main.async {
+            self.tableView.beginUpdates()
+            self.refreshControl.endRefreshing()
+            self.tableView.endUpdates()
+        }
+    }
 }
 
 extension ViewController : ProfileView{
     func pinnedReposLoadSuccess(pinnedRepos: [PinnedRepo]) {
+        arrPinnedRepos.removeAll()
         arrPinnedRepos = pinnedRepos
         tableView.reloadData()
+        stopRefrshIndic()
     }
     
     func profileLoadSuccess(userInfo : UserInfo) {
